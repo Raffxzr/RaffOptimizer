@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RaffOptimizer v1.0 - WebUI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>RaffOptimizer v1.0</h1>
+      <p>By Raffxzr • Flush RAM + Cache Cleaner + Multi-User APK Freezer & Debloater</p>
+    </div>
+    <span class="badge" id="bridge-mode">Loading...</span>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('dashboard', this)">⚡ Optimizer</button>
+    <button class="tab-btn" onclick="switchTab('freeze', this)">❄️ Freeze APK</button>
+    <button class="tab-btn" onclick="switchTab('debloat', this)">🗑️ Debloat APK</button>
+    <button class="tab-btn" onclick="switchTab('logs', this)">📜 Logs</button>
+  </div>
+
+  <!-- TAB 1: DASHBOARD & OPTIMIZER -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="card">
+      <h2>System Status <button class="btn btn-outline" onclick="loadStats()">🔄 Refresh</button></h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Current RAM Usage</div>
+          <div class="stat-val" id="stat-ram">Loading...</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Auto Cache Cleaner (6h Cron)</div>
+          <div class="stat-val" id="stat-service">Loading...</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Detected User Profiles</div>
+          <div class="stat-val" id="stat-users">User 0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🚀 Flush RAM (Reborn Engine)</h2>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;">
+        Choose a RAM flushing profile before gaming or whenever your device feels sluggish:
+      </p>
+      <div class="btn-grid">
+        <button class="btn btn-success" onclick="runFlush('safe')">Flush 1 (Safe)</button>
+        <button class="btn" onclick="runFlush('aggressive')">Flush 2 (Aggressive)</button>
+        <button class="btn btn-warning" onclick="runFlush('extreme')">Flush 3 (Extreme)</button>
+        <button class="btn btn-danger" onclick="runFlush('custom')">Flush 5 (Custom Limit)</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🧹 Cache Cleaner</h2>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;">
+        Instantly clean cache & code_cache across all apps or manage the automatic background service (&gt;1GB threshold):
+      </p>
+      <div class="btn-grid">
+        <button class="btn" onclick="runCleanCache()">🧹 Clean Cache Now</button>
+        <button class="btn btn-success" onclick="toggleCleanerService('start')">▶️ Start Auto-Cleaner</button>
+        <button class="btn btn-danger" onclick="toggleCleanerService('stop')">⏹️ Stop Auto-Cleaner</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: FREEZE / UNFREEZE APK (MULTI-USER) -->
+  <div id="tab-freeze" class="tab-content">
+    <div class="card">
+      <h2>❄️ Freeze & Unfreeze APK (Multi-User)</h2>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:10px;">
+        Freeze or unfreeze apps across <b>All Users (User 0, User 10, Work Profile/Clone)</b> or a specific user profile.
+      </p>
+      <div class="toolbar">
+        <select id="freeze-user-select" onchange="loadPackages()">
+          <option value="all">Target: All Users (0, 10, etc.)</option>
+          <option value="0">Target: User 0 (Owner)</option>
+          <option value="10">Target: User 10 (Work / Dual App)</option>
+        </select>
+        <select id="freeze-filter-select" onchange="renderFreezeList()">
+          <option value="all">All APKs (System & User)</option>
+          <option value="user">User APKs Only</option>
+          <option value="system">System APKs Only</option>
+          <option value="frozen">Frozen APKs Only</option>
+        </select>
+        <input type="text" id="freeze-search" placeholder="Search package name (e.g., facebook, miui)..." oninput="renderFreezeList()" />
+      </div>
+      <div class="toolbar">
+        <input type="text" id="freeze-manual-pkg" placeholder="Enter package manually (e.g., com.facebook.katana)" />
+        <button class="btn" onclick="freezeManual('freeze')">❄️ Freeze</button>
+        <button class="btn btn-success" onclick="freezeManual('unfreeze')">🔥 Unfreeze</button>
+      </div>
+      <div class="pkg-list" id="freeze-pkg-list">
+        <div class="pkg-item"><span class="pkg-name">Click this tab or Refresh to load installed packages...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: REMOVE / DEBLOAT APK (SYSTEM & USER) -->
+  <div id="tab-debloat" class="tab-content">
+    <div class="card">
+      <h2>🗑️ Remove / Debloat APK (System & User)</h2>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:10px;">
+        Remove pre-installed bloatware (with <b>Systemless Magisk .replace</b> support) or third-party apps, and restore them anytime.
+      </p>
+      <div class="toolbar">
+        <select id="debloat-user-select">
+          <option value="all">Target: All Users (0, 10, etc.)</option>
+          <option value="0">Target: User 0 (Owner)</option>
+          <option value="10">Target: User 10 (Work / Dual App)</option>
+        </select>
+        <select id="debloat-mode-select">
+          <option value="systemless">Mode: Systemless Replace + PM Uninstall (Recommended for System Apps)</option>
+          <option value="pm">Mode: PM Uninstall Only</option>
+        </select>
+        <select id="debloat-filter-select" onchange="renderDebloatList()">
+          <option value="all">All Active APKs</option>
+          <option value="system">System APKs Only</option>
+          <option value="user">User APKs Only</option>
+          <option value="removed">Removed APKs (Restore)</option>
+        </select>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="debloat-search" placeholder="Search package to remove or restore..." oninput="renderDebloatList()" />
+        <button class="btn btn-outline" onclick="loadPackages()">🔄 Reload List</button>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="debloat-manual-pkg" placeholder="Enter package manually (e.g., com.miui.analytics)" />
+        <button class="btn btn-danger" onclick="debloatManual('remove')">🗑️ Remove APK</button>
+        <button class="btn btn-success" onclick="debloatManual('restore')">♻️ Restore APK</button>
+      </div>
+      <div class="pkg-list" id="debloat-pkg-list">
+        <div class="pkg-item"><span class="pkg-name">Loading package list...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: LOGS -->
+  <div id="tab-logs" class="tab-content">
+    <div class="card">
+      <h2>📜 RaffOptimizer Activity Logs <button class="btn btn-outline" onclick="loadLogs()">🔄 Refresh Logs</button></h2>
+      <p style="font-size:0.78rem;color:var(--muted);margin:6px 0;">Cache Cleaner Log:</p>
+      <pre class="log-box" id="log-cleaner">No logs yet.</pre>
+      <p style="font-size:0.78rem;color:var(--muted);margin:10px 0 6px;">RAM Flush Log:</p>
+      <pre class="log-box" id="log-flush">No logs yet.</pre>
+      <p style="font-size:0.78rem;color:var(--muted);margin:10px 0 6px;">APK Freeze & Debloat Log:</p>
+      <pre class="log-box" id="log-apk">No logs yet.</pre>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
