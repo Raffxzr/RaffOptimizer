@@ -1,9 +1,5 @@
 # ⚡ RaffOptimizer
 
-![Version](https://img.shields.io/badge/Version-v1.0-38bdf8?style=flat-square)
-![Root](https://img.shields.io/badge/Root-Magisk%20%7C%20KernelSU%20%7C%20APatch-10b981?style=flat-square)
-![Author](https://img.shields.io/badge/Author-Raffxzr-f59e0b?style=flat-square)
-
 **RaffOptimizer** is an all-in-one device maintenance module for **Magisk, KernelSU, and APatch**. It combines a **Multi-Mode RAM Flusher** and an **Auto/Manual Cache Cleaner** with a **Multi-User App Freezer**, **Systemless APK Debloater**, and a **Built-in WebUI**.
 
 ---
