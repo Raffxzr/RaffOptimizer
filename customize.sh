@@ -4,7 +4,7 @@ ASH_STANDALONE=1
 
 print_banner() {
   ui_print "************************************************"
-  ui_print "              RaffOptimizer v1.0                "
+  ui_print "              RaffOptimizer v1.1                "
   ui_print "              Author : Raffxzr                  "
   ui_print "************************************************"
 }
@@ -21,7 +21,7 @@ fi
 print_banner
 
 ui_print "- Extracting RaffOptimizer module files..."
-unzip -o "$ZIPFILE" -x 'META-INF/*' -d "$MODPATH" >&2
+unzip -o "$ZIPFILE" -x 'META-INF/*' '.git/*' -d "$MODPATH" >&2
 
 # Setup persistent directory in /data/adb/raffoptimizer
 mkdir -p /data/adb/raffoptimizer/cleaner
@@ -52,4 +52,4 @@ set_perm "$MODPATH/action.sh" 0 0 0755
 set_perm "$MODPATH/uninstall.sh" 0 0 0755
 set_perm "$MODPATH/webroot/cgi-bin/api.sh" 0 0 0755
 
-ui_print "- RaffOptimizer installation complete! Please reboot your device."
+ui_print "- RaffOptimizer v1.1 installation complete! Please reboot your device."

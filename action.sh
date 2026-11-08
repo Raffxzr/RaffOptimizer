@@ -1,7 +1,7 @@
 #!/system/bin/sh
 # RaffOptimizer - Action Button Handler
 echo "=========================================="
-echo "       RaffOptimizer v1.0 by Raffxzr      "
+echo "       RaffOptimizer v1.1 by Raffxzr      "
 echo "=========================================="
 
 echo "[1/3] Running Cache Cleaner..."

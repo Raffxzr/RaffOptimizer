@@ -1,6 +1,4 @@
 #!/system/bin/sh
-# RaffOptimizer - Multi-Mode RAM Flusher
-# Combines Flush RAM v1.9 binaries (flush, flush2, flush3, flush5) with native 64-bit kernel & AM engine
 
 LOGFILE="/data/adb/raffoptimizer/run/flush.log"
 mkdir -p /data/adb/raffoptimizer/run

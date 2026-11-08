@@ -25,8 +25,13 @@ for pair in $QUERY_STRING; do
 done
 unset IFS
 
+# Bersihkan ANSI escape code & escape karakter JSON
 json_escape() {
-  sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e ':a;N;$!ba;s/\n/\\n/g' -e 's/\r//g'
+  sed -e 's/\x1b\[[0-9;]*m//g' \
+      -e 's/\\/\\\\/g' \
+      -e 's/"/\\"/g' \
+      -e ':a;N;$!ba;s/\n/\\n/g' \
+      -e 's/\r//g'
 }
 
 case "$action" in
@@ -36,7 +41,8 @@ case "$action" in
     cleaner_pid=$(ps -ef 2>/dev/null | grep "crond -c /data/adb/raffoptimizer/run" | grep -v grep | awk '{print $2}' | head -n 1)
     svc_status="Stopped"
     [ -n "$cleaner_pid" ] && svc_status="Running (PID: $cleaner_pid)"
-    printf '{"status":"ok","mem":"%s","users":"%s","service":"%s"}' "$mem" "$users" "$svc_status"
+    accent=$(settings get secure theme_customization_overlay_packages 2>/dev/null | sed -n 's/.*"android\.theme\.customization\.system_palette":"\([^"]*\)".*/\1/p')
+    printf '{"status":"ok","mem":"%s","users":"%s","service":"%s","accent":"%s"}' "$mem" "$users" "$svc_status" "$accent"
     ;;
   flush)
     out=$(/system/bin/raff-flush "${param3:-safe}" 2>&1 | json_escape)
@@ -88,6 +94,13 @@ case "$action" in
     f_log=$(cat /data/adb/raffoptimizer/run/flush.log 2>/dev/null | tail -n 20 | json_escape)
     d_log=$(cat /data/adb/raffoptimizer/run/debloat.log /data/adb/raffoptimizer/run/freeze.log 2>/dev/null | tail -n 30 | json_escape)
     printf '{"status":"ok","cleaner_log":"%s","flush_log":"%s","apk_log":"%s"}' "$c_log" "$f_log" "$d_log"
+    ;;
+  clear_logs)
+    > /data/adb/raffoptimizer/run/cleaner.log 2>/dev/null
+    > /data/adb/raffoptimizer/run/flush.log 2>/dev/null
+    > /data/adb/raffoptimizer/run/debloat.log 2>/dev/null
+    > /data/adb/raffoptimizer/run/freeze.log 2>/dev/null
+    printf '{"status":"ok","output":"All module logs cleared."}'
     ;;
   *)
     printf '{"status":"error","message":"Unknown action"}'

@@ -1,6 +1,4 @@
 #!/system/bin/sh
-# RaffOptimizer - Multi-User APK Freezer & Unfreezer
-# Supports freezing/unfreezing apps across all Android users (e.g., User 0, User 10, Work Profile, Clone Apps)
 
 CONFIG_DIR="/data/adb/raffoptimizer/config"
 FROZEN_LIST="${CONFIG_DIR}/frozen_apps.list"

@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# RaffOptimizer - Local WebUI Server Manager (Port 8899)
+
 MODDIR="/data/adb/modules/RaffOptimizer"
 WEBROOT="${MODDIR}/webroot"
 PIDFILE="/data/adb/raffoptimizer/run/webui.pid"

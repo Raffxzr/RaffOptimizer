@@ -1,6 +1,4 @@
 #!/system/bin/sh
-# RaffOptimizer - System & User APK Remover / Debloater
-# Supports Multi-User PM Uninstall + Magisk Systemless Replacement (.replace) & Restore
 
 MODDIR="/data/adb/modules/RaffOptimizer"
 CONFIG_DIR="/data/adb/raffoptimizer/config"
