@@ -1,0 +1,46 @@
+#!/system/bin/sh
+# RaffOptimizer - Local WebUI Server Manager (Port 8899)
+MODDIR="/data/adb/modules/RaffOptimizer"
+WEBROOT="${MODDIR}/webroot"
+PIDFILE="/data/adb/raffoptimizer/run/webui.pid"
+mkdir -p /data/adb/raffoptimizer/run
+
+busybox_bin="/data/adb/magisk/busybox"
+if [ ! -x "$busybox_bin" ]; then
+  if [ -x "/data/adb/ksu/bin/busybox" ]; then
+    busybox_bin="/data/adb/ksu/bin/busybox"
+  elif [ -x "/data/adb/ap/bin/busybox" ]; then
+    busybox_bin="/data/adb/ap/bin/busybox"
+  else
+    busybox_bin="busybox"
+  fi
+fi
+
+chmod 0755 "${WEBROOT}/cgi-bin/api.sh" 2>/dev/null
+
+start_webui() {
+  stop_webui >/dev/null 2>&1
+  "${busybox_bin}" httpd -p 127.0.0.1:8899 -h "${WEBROOT}"
+  echo "RaffOptimizer WebUI is running at: http://127.0.0.1:8899"
+}
+
+stop_webui() {
+  pkill -f "httpd -p 127.0.0.1:8899" 2>/dev/null || true
+  echo "RaffOptimizer WebUI stopped."
+}
+
+case "${1:-start}" in
+  start)
+    start_webui
+    ;;
+  stop)
+    stop_webui
+    ;;
+  open)
+    start_webui
+    am start -a android.intent.action.VIEW -d "http://127.0.0.1:8899" >/dev/null 2>&1
+    ;;
+  *)
+    echo "Usage: raff-webui {start|stop|open}"
+    ;;
+esac
