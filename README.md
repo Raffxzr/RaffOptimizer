@@ -1,5 +1,8 @@
 # ⚡ RaffOptimizer
 
+[![Build](https://github.com/Raffxzr/RaffOptimizer/actions/workflows/build.yml/badge.svg)](https://github.com/Raffxzr/RaffOptimizer/actions/workflows/build.yml)
+[![Latest release](https://img.shields.io/github/v/release/Raffxzr/RaffOptimizer)](https://github.com/Raffxzr/RaffOptimizer/releases/latest)
+
 **RaffOptimizer** is an all-in-one device maintenance module for **Magisk, KernelSU, and APatch**. It combines a **Multi-Mode RAM Flusher** and an **Auto/Manual Cache Cleaner** with a **Multi-User App Freezer**, **Systemless APK Debloater**, and a **Material You (M3) Dual-Mode WebUI**.
 
 ---
