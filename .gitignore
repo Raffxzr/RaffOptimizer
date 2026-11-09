@@ -1,1 +1,5 @@
+# Build artefacts (never commit release zips)
 *.zip
+build/
+dist/
+release-notes.md
