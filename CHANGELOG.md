@@ -4,6 +4,25 @@ All notable changes, improvements, and fixes to **RaffOptimizer** are documented
 
 ---
 
+## [v1.2] - WebUI Marquee & Layout Polish
+
+### ✨ Added
+- **Auto-Marquee for Overflowing Text**: Long labels now scroll automatically with a smooth ping-pong animation and edge fade instead of being clipped. Applied to action buttons, navigation items, terminal titles, dropdown values, and input placeholders, with animation speed adapting to text length. Marquees recalculate on tab switch, window resize, package list render, and dropdown change.
+- **Select & Input Overlay Wrappers**: Added `.m3-field-wrap` wrappers with a custom SVG dropdown arrow, transparent native select text, and placeholder overlays that hide on focus or when the field has a value.
+
+### 🎨 UI Fixes
+- **Header & Layout Restructure**: Split the header into a top bar (eyebrow, bridge badge, accent button) and a title group; unified badge and icon-button sizing at 34px and tightened spacing.
+- **Navigation Bar Alignment**: Four equal `minmax(0, 1fr)` columns with taller 54px stacked icon + label layout, preventing overlap on narrow screens.
+- **Anti-Overflow Hardening**: `overflow-x: hidden` on the body, `minmax(0, 1fr)` grids, and `min-width: 0` / `overflow-wrap: anywhere` on cards, buttons, and package info.
+- **Button Sizing Consistency**: Transparent 1.5px borders for uniform metrics, a `.full-btn` full-width variant, fixed 100px package action buttons, and centered marquee text.
+- **Logs Tab Actions**: Moved Refresh/Clear into a full-width equal button row with clearer labels ("Refresh Logs" / "Clear All Logs").
+
+### 🔧 Fixed
+- **Accessibility & Markup**: Added `type="button"` to all buttons, removed inconsistent focus outlines, fixed unescaped `&` entities, and added missing trailing newlines.
+- **Cleanup**: Removed unused `.header-btn-group` and `.terminal-container.full-height` rules.
+
+---
+
 ## [v1.1] - Material You WebUI & Live Console Update
 
 ### ✨ Added

@@ -4,7 +4,7 @@ ASH_STANDALONE=1
 
 print_banner() {
   ui_print "************************************************"
-  ui_print "              RaffOptimizer v1.1                "
+  ui_print "              RaffOptimizer v1.2                "
   ui_print "              Author : Raffxzr                  "
   ui_print "************************************************"
 }
@@ -52,4 +52,4 @@ set_perm "$MODPATH/action.sh" 0 0 0755
 set_perm "$MODPATH/uninstall.sh" 0 0 0755
 set_perm "$MODPATH/webroot/cgi-bin/api.sh" 0 0 0755
 
-ui_print "- RaffOptimizer v1.1 installation complete! Please reboot your device."
+ui_print "- RaffOptimizer v1.2 installation complete! Please reboot your device."

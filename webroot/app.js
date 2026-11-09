@@ -21,6 +21,104 @@
     return new Date().toLocaleTimeString('en-GB', { hour12: false });
   }
 
+  // =========================================================
+  // AUTO-MARQUEE ENGINE (Buttons, Terminal Titles, Selects, Inputs)
+  // =========================================================
+  function wrapSpanWithMarquee(spanEl) {
+    if (!spanEl || spanEl.classList.contains('marquee-clip') || spanEl.querySelector('.marquee-track')) return;
+    const text = spanEl.textContent;
+    spanEl.classList.add('marquee-clip');
+    spanEl.textContent = '';
+    const track = document.createElement('span');
+    track.className = 'marquee-track';
+    track.textContent = text;
+    spanEl.appendChild(track);
+  }
+
+  function setupMarqueeElements() {
+    // 1. Buttons & Nav Items & Terminal Titles
+    document.querySelectorAll('.m3-btn > span, .nav-item > span, .terminal-title > span:last-child').forEach(wrapSpanWithMarquee);
+
+    // 2. Select Dropdowns (<select class="m3-select">)
+    document.querySelectorAll('select.m3-select').forEach((sel) => {
+      if (sel.parentElement && sel.parentElement.classList.contains('select-wrap')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'm3-field-wrap select-wrap';
+      sel.parentNode.insertBefore(wrap, sel);
+      wrap.appendChild(sel);
+
+      const overlay = document.createElement('div');
+      overlay.className = 'select-marquee-overlay';
+      overlay.innerHTML = `<span class="marquee-clip"><span class="marquee-track"></span></span>`;
+      wrap.appendChild(overlay);
+
+      sel.addEventListener('change', () => syncSelectOverlay(sel));
+      syncSelectOverlay(sel);
+    });
+
+    // 3. Input Placeholders (<input class="m3-input" placeholder="...">)
+    document.querySelectorAll('input.m3-input[placeholder]').forEach((inp) => {
+      if (inp.parentElement && inp.parentElement.classList.contains('input-wrap')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'm3-field-wrap input-wrap';
+      inp.parentNode.insertBefore(wrap, inp);
+      wrap.appendChild(inp);
+
+      const overlay = document.createElement('div');
+      overlay.className = 'input-placeholder-overlay';
+      const placeholderText = inp.getAttribute('placeholder') || '';
+      overlay.innerHTML = `<span class="marquee-clip"><span class="marquee-track"></span></span>`;
+      overlay.querySelector('.marquee-track').textContent = placeholderText;
+      wrap.appendChild(overlay);
+
+      const updateInputState = () => {
+        wrap.classList.toggle('has-value', inp.value.length > 0);
+      };
+      inp.addEventListener('input', updateInputState);
+      inp.addEventListener('focus', () => wrap.classList.add('is-focused'));
+      inp.addEventListener('blur', () => {
+        wrap.classList.remove('is-focused');
+        updateInputState();
+      });
+      updateInputState();
+    });
+
+    refreshAllMarquees();
+  }
+
+  function syncSelectOverlay(sel) {
+    if (!sel || !sel.parentElement) return;
+    const track = sel.parentElement.querySelector('.select-marquee-overlay .marquee-track');
+    if (!track) return;
+    const opt = sel.options[sel.selectedIndex] || sel.options[0];
+    track.textContent = opt ? opt.textContent : '';
+    requestAnimationFrame(refreshAllMarquees);
+  }
+
+  function refreshAllMarquees() {
+    document.querySelectorAll('.marquee-clip').forEach((clip) => {
+      const track = clip.querySelector('.marquee-track');
+      if (!track) return;
+      clip.classList.remove('is-overflowing');
+      clip.style.removeProperty('--scroll-dist');
+      clip.style.removeProperty('--marquee-duration');
+
+      const clipWidth = clip.clientWidth;
+      const trackWidth = track.scrollWidth;
+      if (clipWidth > 0 && trackWidth > clipWidth + 2) {
+        const dist = -(trackWidth - clipWidth + 6);
+        const duration = Math.max(4.5, Math.min(12, Math.abs(dist) / 22 + 3.5));
+        clip.style.setProperty('--scroll-dist', `${dist}px`);
+        clip.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+        clip.classList.add('is-overflowing');
+      }
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(refreshAllMarquees);
+  });
+
   function writeTerm(termId, dotId, message, isBusy = false) {
     const term = document.getElementById(termId);
     const dot = document.getElementById(dotId);
@@ -146,6 +244,9 @@
       const tabId = btn.dataset.tab;
       document.getElementById('tab-' + tabId).classList.add('active');
 
+      // Hitung ulang marquee pada tab yang baru dibuka (karena sebelumnya display: none)
+      requestAnimationFrame(refreshAllMarquees);
+
       if ((tabId === 'freeze' || tabId === 'debloat') && pkgState.system.length === 0 && pkgState.user.length === 0) {
         loadPackages();
       } else if (tabId === 'logs') {
@@ -190,6 +291,7 @@
         sel.appendChild(opt10);
       }
       sel.value = current;
+      syncSelectOverlay(sel);
     });
   }
 
@@ -304,8 +406,8 @@
             ${item.frozen ? '<span class="pkg-tag frozen">Frozen</span>' : ''}
           </div>
         </div>
-        <button class="m3-btn pkg-action-btn ${btnClass}">
-          <span>${btnText}</span>
+        <button type="button" class="m3-btn pkg-action-btn ${btnClass}">
+          <span class="marquee-clip"><span class="marquee-track">${btnText}</span></span>
         </button>
       `;
 
@@ -314,6 +416,7 @@
       });
       container.appendChild(row);
     });
+    requestAnimationFrame(refreshAllMarquees);
   }
 
   async function doFreezeAction(action, pkg) {
@@ -379,8 +482,8 @@
             <span class="pkg-tag ${isRemoved ? 'frozen' : ''}">${item.type === 'system' ? 'System' : isRemoved ? 'Removed' : 'User'}</span>
           </div>
         </div>
-        <button class="m3-btn pkg-action-btn ${btnClass}">
-          <span>${btnText}</span>
+        <button type="button" class="m3-btn pkg-action-btn ${btnClass}">
+          <span class="marquee-clip"><span class="marquee-track">${btnText}</span></span>
         </button>
       `;
 
@@ -389,6 +492,7 @@
       });
       container.appendChild(row);
     });
+    requestAnimationFrame(refreshAllMarquees);
   }
 
   async function doDebloatAction(action, pkg) {
@@ -449,6 +553,7 @@
   });
 
   window.addEventListener('DOMContentLoaded', () => {
+    setupMarqueeElements();
     loadStats();
   });
 })();

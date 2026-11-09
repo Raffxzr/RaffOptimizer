@@ -3,45 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>RaffOptimizer v1.1 - WebUI</title>
+  <title>RaffOptimizer v1.2 - WebUI</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app-container">
     <!-- Top App Bar / Header Card -->
     <header class="top-card">
-      <div class="top-card-main">
-        <div class="title-group">
-          <span class="eyebrow">System Utility Module</span>
-          <h1>RaffOptimizer <span class="version-pill">v1.1</span></h1>
-          <p class="subtitle">By Raffxzr • Flush RAM + Cache Cleaner + Multi-User APK Freezer & Debloater</p>
-        </div>
+      <div class="top-bar-row">
+        <span class="eyebrow">System Utility Module</span>
         <div class="header-actions">
           <span id="bridge-mode" class="tonal-badge">Loading...</span>
-          <button id="accent-cycle-btn" class="icon-btn" title="Switch Material You Accent / System Sync">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <button id="accent-cycle-btn" class="icon-btn" type="button" title="Switch Material You Accent / System Sync">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
               <path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
             </svg>
           </button>
         </div>
       </div>
+      <div class="title-group">
+        <h1>RaffOptimizer <span class="version-pill">v1.2</span></h1>
+        <p class="subtitle">By Raffxzr • Flush RAM + Cache Cleaner + Multi-User APK Freezer &amp; Debloater</p>
+      </div>
     </header>
 
     <!-- Material You Segmented Navigation Bar -->
     <nav class="nav-bar" role="tablist">
-      <button class="nav-item active" data-tab="optimizer" role="tab">
+      <button class="nav-item active" type="button" data-tab="optimizer" role="tab">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66l.1-.16L12.5 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15L11 21z"/></svg>
         <span>Optimizer</span>
       </button>
-      <button class="nav-item" data-tab="freeze" role="tab">
+      <button class="nav-item" type="button" data-tab="freeze" role="tab">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22v-2z"/></svg>
         <span>Freeze</span>
       </button>
-      <button class="nav-item" data-tab="debloat" role="tab">
+      <button class="nav-item" type="button" data-tab="debloat" role="tab">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
         <span>Debloat</span>
       </button>
-      <button class="nav-item" data-tab="logs" role="tab">
+      <button class="nav-item" type="button" data-tab="logs" role="tab">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 18V6h16v12H4zm2-9h2v2H6V9zm0 4h8v2H6v-2zm10 0h2v2h-2v-2zm-6-4h8v2h-8V9z"/></svg>
         <span>Logs</span>
       </button>
@@ -51,12 +51,12 @@
     <section id="tab-optimizer" class="tab-panel active">
       <div class="m3-card">
         <div class="card-header">
-          <div>
+          <div class="card-title-wrap">
             <h2>System Status</h2>
             <p class="card-desc">Real-time memory metrics and background daemon status</p>
           </div>
-          <button id="btn-refresh-status" class="m3-btn tonal compact">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          <button id="btn-refresh-status" type="button" class="m3-btn tonal compact">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
             <span>Refresh</span>
           </button>
         </div>
@@ -79,23 +79,23 @@
 
       <div class="m3-card">
         <div class="card-header">
-          <div>
+          <div class="card-title-wrap">
             <h2>Flush RAM (Reborn Engine)</h2>
             <p class="card-desc">Choose a RAM flushing profile before gaming or whenever your device feels sluggish.</p>
           </div>
         </div>
 
         <div class="button-grid-2x2">
-          <button class="m3-btn tonal-primary action-flush" data-mode="safe">
+          <button type="button" class="m3-btn tonal-primary action-flush" data-mode="safe">
             <span>Flush 1 (Safe)</span>
           </button>
-          <button class="m3-btn tonal-primary action-flush" data-mode="aggressive">
+          <button type="button" class="m3-btn tonal-primary action-flush" data-mode="aggressive">
             <span>Flush 2 (Aggressive)</span>
           </button>
-          <button class="m3-btn tonal-secondary action-flush" data-mode="extreme">
+          <button type="button" class="m3-btn tonal-secondary action-flush" data-mode="extreme">
             <span>Flush 3 (Extreme)</span>
           </button>
-          <button class="m3-btn filled-tonal-warn action-flush" data-mode="custom">
+          <button type="button" class="m3-btn filled-tonal-warn action-flush" data-mode="custom">
             <span>Flush 5 (Custom Limit)</span>
           </button>
         </div>
@@ -103,21 +103,21 @@
 
       <div class="m3-card">
         <div class="card-header">
-          <div>
+          <div class="card-title-wrap">
             <h2>Cache Cleaner</h2>
-            <p class="card-desc">Instantly clean cache & code_cache across all apps or manage the automatic background service (&gt;1GB threshold).</p>
+            <p class="card-desc">Instantly clean cache &amp; code_cache across all apps or manage the automatic background service (&gt;1GB threshold).</p>
           </div>
         </div>
 
         <div class="button-stack">
-          <button id="btn-clean-now" class="m3-btn filled">
+          <button id="btn-clean-now" type="button" class="m3-btn filled full-btn">
             <span>Clean Cache Now</span>
           </button>
           <div class="button-row-equal">
-            <button id="btn-start-cleaner" class="m3-btn tonal">
+            <button id="btn-start-cleaner" type="button" class="m3-btn tonal">
               <span>Start Auto-Cleaner</span>
             </button>
-            <button id="btn-stop-cleaner" class="m3-btn outlined-danger">
+            <button id="btn-stop-cleaner" type="button" class="m3-btn outlined-danger">
               <span>Stop Auto-Cleaner</span>
             </button>
           </div>
@@ -130,7 +130,7 @@
               <span class="status-dot" id="opt-term-dot"></span>
               <span>Optimizer Execution Console (raff-flush / cleaner)</span>
             </div>
-            <button class="term-clear-btn" data-target="opt-terminal-body">Clear</button>
+            <button type="button" class="term-clear-btn" data-target="opt-terminal-body">Clear</button>
           </div>
           <pre id="opt-terminal-body" class="terminal-body">[System] Ready. Waiting for Flush RAM or Cache Cleaner command...</pre>
         </div>
@@ -141,11 +141,13 @@
     <section id="tab-freeze" class="tab-panel">
       <div class="m3-card">
         <div class="card-header">
-          <div>
-            <h2>Freeze & Unfreeze APK (Multi-User)</h2>
+          <div class="card-title-wrap">
+            <h2>Freeze &amp; Unfreeze APK (Multi-User)</h2>
             <p class="card-desc">Freeze or unfreeze apps across All Users (User 0, User 10, Work Profile/Clone) or a specific user profile.</p>
           </div>
-          <button id="btn-reload-freeze" class="m3-btn tonal compact">Reload</button>
+          <button id="btn-reload-freeze" type="button" class="m3-btn tonal compact">
+            <span>Reload</span>
+          </button>
         </div>
 
         <div class="filter-row">
@@ -153,7 +155,7 @@
             <option value="all">Target: All Users (0)</option>
           </select>
           <select id="freeze-filter-select" class="m3-select">
-            <option value="all">All APKs (System & User)</option>
+            <option value="all">All APKs (System &amp; User)</option>
             <option value="user">User APKs Only</option>
             <option value="system">System APKs Only</option>
             <option value="frozen">Frozen APKs Only</option>
@@ -165,10 +167,10 @@
         <div class="manual-action-box">
           <input type="text" id="freeze-manual-pkg" class="m3-input" placeholder="Enter package manually (e.g., com.facebook.katana)" />
           <div class="button-row-equal">
-            <button id="btn-manual-freeze" class="m3-btn filled">
+            <button id="btn-manual-freeze" type="button" class="m3-btn filled">
               <span>Freeze</span>
             </button>
-            <button id="btn-manual-unfreeze" class="m3-btn tonal">
+            <button id="btn-manual-unfreeze" type="button" class="m3-btn tonal">
               <span>Unfreeze</span>
             </button>
           </div>
@@ -185,7 +187,7 @@
               <span class="status-dot" id="freeze-term-dot"></span>
               <span>Freeze Script Console (raff-freeze)</span>
             </div>
-            <button class="term-clear-btn" data-target="freeze-terminal-body">Clear</button>
+            <button type="button" class="term-clear-btn" data-target="freeze-terminal-body">Clear</button>
           </div>
           <pre id="freeze-terminal-body" class="terminal-body">[Freeze] Ready. Select an app or enter a package name above...</pre>
         </div>
@@ -196,11 +198,13 @@
     <section id="tab-debloat" class="tab-panel">
       <div class="m3-card">
         <div class="card-header">
-          <div>
-            <h2>Remove / Debloat APK (System & User)</h2>
+          <div class="card-title-wrap">
+            <h2>Remove / Debloat APK (System &amp; User)</h2>
             <p class="card-desc">Remove pre-installed bloatware (with Systemless Magisk .replace support) or third-party apps, and restore them anytime.</p>
           </div>
-          <button id="btn-reload-debloat" class="m3-btn tonal compact">Reload</button>
+          <button id="btn-reload-debloat" type="button" class="m3-btn tonal compact">
+            <span>Reload</span>
+          </button>
         </div>
 
         <div class="filter-row">
@@ -216,7 +220,7 @@
         </div>
 
         <select id="debloat-mode-select" class="m3-select">
-          <option value="systemless">Mode: Systemless Replace + PM Uninstall (Recommended)</option>
+          <option value="systemless">Mode: Systemless .replace + PM Uninstall (Recommended)</option>
           <option value="pm">Mode: PM Uninstall Only</option>
         </select>
 
@@ -225,10 +229,10 @@
         <div class="manual-action-box">
           <input type="text" id="debloat-manual-pkg" class="m3-input" placeholder="Enter package manually (e.g., com.miui.analytics)" />
           <div class="button-row-equal">
-            <button id="btn-manual-remove" class="m3-btn filled-danger">
+            <button id="btn-manual-remove" type="button" class="m3-btn filled-danger">
               <span>Remove APK</span>
             </button>
-            <button id="btn-manual-restore" class="m3-btn tonal">
+            <button id="btn-manual-restore" type="button" class="m3-btn tonal">
               <span>Restore APK</span>
             </button>
           </div>
@@ -245,7 +249,7 @@
               <span class="status-dot" id="debloat-term-dot"></span>
               <span>Debloat Script Console (raff-debloat)</span>
             </div>
-            <button class="term-clear-btn" data-target="debloat-terminal-body">Clear</button>
+            <button type="button" class="term-clear-btn" data-target="debloat-terminal-body">Clear</button>
           </div>
           <pre id="debloat-terminal-body" class="terminal-body">[Debloat] Ready. Waiting for package remove/restore command...</pre>
         </div>
@@ -256,14 +260,19 @@
     <section id="tab-logs" class="tab-panel">
       <div class="m3-card">
         <div class="card-header">
-          <div>
+          <div class="card-title-wrap">
             <h2>RaffOptimizer Activity Logs</h2>
             <p class="card-desc">Persistent logs stored in /data/adb/raffoptimizer/run/</p>
           </div>
-          <div class="header-btn-group">
-            <button id="btn-refresh-logs" class="m3-btn tonal compact">Refresh</button>
-            <button id="btn-clear-logs" class="m3-btn outlined-danger compact">Clear All</button>
-          </div>
+        </div>
+
+        <div class="button-row-equal">
+          <button id="btn-refresh-logs" type="button" class="m3-btn tonal">
+            <span>Refresh Logs</span>
+          </button>
+          <button id="btn-clear-logs" type="button" class="m3-btn outlined-danger">
+            <span>Clear All Logs</span>
+          </button>
         </div>
 
         <div class="terminal-container">
@@ -282,7 +291,7 @@
 
         <div class="terminal-container">
           <div class="terminal-header">
-            <div class="terminal-title"><span class="status-dot"></span><span>APK Freeze & Debloat Log (freeze.log & debloat.log)</span></div>
+            <div class="terminal-title"><span class="status-dot"></span><span>APK Freeze &amp; Debloat Log (freeze.log &amp; debloat.log)</span></div>
           </div>
           <pre id="log-apk" class="terminal-body">No logs yet.</pre>
         </div>

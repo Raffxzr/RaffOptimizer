@@ -33,7 +33,7 @@
 
 ## 📦 Installation
 
-1. Download `RaffOptimizer-v1.1.zip` from Releases.
+1. Download `RaffOptimizer-v1.2.zip` from Releases.
 2. Flash the zip via **Magisk**, **KernelSU**, or **APatch** Manager.
 3. Reboot your device.
 4. Tap **WebUI** / **Action** in your root manager or open `http://127.0.0.1:8899` in your browser.
