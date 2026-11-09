@@ -4,6 +4,25 @@ All notable changes, improvements, and fixes to **RaffOptimizer** are documented
 
 ---
 
+## [v1.3] - Build System & Automated Releases
+
+### ✨ Added
+- **Single-source build pipeline**: New `build.sh` stages a clean module tree and produces `dist/RaffOptimizer-<version>.zip`. CLI scripts now live only in `scripts/` and are copied to `system/bin/` during the build.
+- **Automated GitHub releases**: Added the `Release` workflow. Pushing a `v*` tag validates `module.prop`, builds the zip, creates or updates the GitHub release, and commits the new `update.json` so OTA clients pick the release up immediately.
+- **CI build checks**: Added the `Build` workflow, which packages the module and validates shell syntax on every push and pull request.
+- **Verified packaging**: The build normalises file permissions and fails if a required runtime file is missing from the final zip.
+
+### 🔧 Changed
+- **Repository restructure**: Consolidated `RaffOptimizer-v1.0`, `v1.1`, `v1.1-fixed`, and the standalone `v1.2.zip` into one `RaffOptimizer/` source tree.
+- **Removed duplicated scripts**: Deleted the tracked `system/bin/` mirror and the unused `common/system.prop`; `system/bin/` is now generated from `scripts/` at build time.
+- **Installer cleanup**: Dropped the stale `$MODPATH/scripts` permission pass from `customize.sh`, since `scripts/` is no longer shipped inside the module.
+- **Documentation**: The README now documents the build, repository, and release workflow.
+
+### 🐛 Fixed
+- Removed the stale duplicate changelog that stopped at v1.1 and could make OTA users think v1.1 was the latest version.
+
+---
+
 ## [v1.2] - WebUI Marquee & Layout Polish
 
 ### ✨ Added
