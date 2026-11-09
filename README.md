@@ -33,10 +33,68 @@
 
 ## 📦 Installation
 
-1. Download `RaffOptimizer-v1.2.zip` from Releases.
+1. Download the latest `RaffOptimizer-v*.zip` from **Releases**.
 2. Flash the zip via **Magisk**, **KernelSU**, or **APatch** Manager.
 3. Reboot your device.
 4. Tap **WebUI** / **Action** in your root manager or open `http://127.0.0.1:8899` in your browser.
+
+---
+
+## 🛠️ Building from Source
+
+Requirements: `bash`, `zip`, and `unzip`.
+
+```bash
+git clone https://github.com/Raffxzr/RaffOptimizer.git
+cd RaffOptimizer
+./build.sh
+```
+
+The flashable module is written to `dist/RaffOptimizer-<version>.zip`.
+`build.sh` reads `version` / `versionCode` from `module.prop`, copies the CLI
+scripts from `scripts/` into `system/bin/` while staging, normalises file
+permissions, and verifies that the archive contains every runtime file.
+
+### Repository Layout
+
+```text
+RaffOptimizer/
+├── build.sh                  # single entry point for packaging
+├── module.prop               # module metadata (version source of truth)
+├── update.json               # OTA manifest, updated by the release workflow
+├── customize.sh              # installer
+├── service.sh / action.sh    # boot + action-button hooks
+├── scripts/                  # single source for every CLI binary
+├── cleaner/                  # cache-cleaner service files
+├── webroot/                  # Material You WebUI
+├── system/priv-app/          # bundled ShowToast.apk
+├── system/xbin/              # 32-bit flush binaries
+├── META-INF/                 # installer metadata
+└── .github/workflows/        # CI + automated releases
+```
+
+---
+
+## 🚀 Releasing
+
+Releases are fully automated. Bump `version` / `versionCode` in `module.prop`,
+add the matching section to `CHANGELOG.md`, commit, then push a tag:
+
+```bash
+git tag v1.3
+git push origin main --tags
+```
+
+The **Release** workflow then:
+
+1. verifies that the tag matches `module.prop`,
+2. builds `dist/RaffOptimizer-<version>.zip`,
+3. creates (or updates) the GitHub release with that zip and the changelog,
+4. commits the new `version`, `versionCode`, and `zipUrl` to `update.json`
+   on `main`, so Magisk / KernelSU / APatch auto-update sees the release.
+
+The **Build** workflow runs on every push and pull request to keep the
+packaging pipeline and shell syntax healthy.
 
 ---
 
