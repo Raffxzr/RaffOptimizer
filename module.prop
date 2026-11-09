@@ -1,7 +1,7 @@
 id=RaffOptimizer
 name=RaffOptimizer
-version=v1.2
-versionCode=120
+version=v1.3
+versionCode=130
 author=Raffxzr
 description=All-in-One Android Optimizer: Auto & Manual Cache Cleaner, Multi-Mode RAM Flusher, Multi-User App Freezer & Systemless APK Debloater with Material You WebUI.
 updateJson=https://raw.githubusercontent.com/Raffxzr/RaffOptimizer/main/update.json

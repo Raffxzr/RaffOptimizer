@@ -1,6 +1,6 @@
 #!/system/bin/sh
 echo "=========================================="
-echo "       RaffOptimizer v1.2 by Raffxzr      "
+echo "       RaffOptimizer v1.3 by Raffxzr      "
 echo "=========================================="
 echo "Quick Commands (Terminal / Termux):"
 echo "  su -c cleaner                -> Clean App Caches"
